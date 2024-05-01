@@ -18,7 +18,7 @@ docker build -t docker.arvancloud.ir/confluentinc/cp-kafka-connect:latest .
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/kafka-connect-with_debezum.png?raw=true)
 
 ```bash
-cd Kafka-source
+cd kafka-source
 ```
 Docker Compose file [docker-compose.yml](https://github.com/kayvansol/kafka-source/blob/main/docker-compose.yml) :
 ```yml
