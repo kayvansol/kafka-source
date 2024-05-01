@@ -135,7 +135,69 @@ Docker Desktop :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/Containers.png?raw=true)
 
-
-
 then check all the container's logs for being healthy.
+
+Configuring Microsoft SQL Server to Enable CDC :
+```
+﻿
+CREATE DATABASE Test_DB;
+GO
+USE Test_DB;
+EXEC sys.sp_cdc_enable_db;ALTER DATABASE Test_DB
+SET CHANGE_TRACKING = ON
+(CHANGE_RETENTION = 2 DAYS, AUTO_CLEANUP = ON)
+
+
+CREATE TABLE prospects (
+  id INTEGER IDENTITY(1001,1) NOT NULL PRIMARY KEY,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE
+);
+
+EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'prospects', @role_name = NULL, @supports_net_changes = 0;
+GO
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/enable-cdc.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/cdc-tables.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/cdc-jobs.png?raw=true)
+
+then create a kafka connector to sql server :
+```powershell
+
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors -d '{ "name": "debezium-connector", 
+"config": { 
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "192.168.1.4", 
+    "database.port": "1433", 
+    "database.user": "sa",
+    "database.password": "ABCabc123456", 
+    "database.dbname": "Test_DB", 
+    "database.names":"Test_DB",
+    "database.server.name": "192.168.1.4", 
+    "table.whitelist": "dbo.prospects", 
+    "topic.prefix": "fullfillment",
+    "database.history.kafka.bootstrap.servers": "kafka1:29092", 
+    "database.history.kafka.topic": "schema-changes-topic",
+    "errors.log.enable": "true",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka1:29092",  
+    "schema.history.internal.kafka.topic": "schema-changes.inventory",
+    "database.trustServerCertificate": true  } 
+}';
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/connector.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/CreatedConnector.png?raw=true)
+
+and after inserting new data to related sql server table, the connector sync kafka topic with the new data :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/Insertnew.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/topicValues.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/topicValues2.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/topicValues3.png?raw=true)
 
