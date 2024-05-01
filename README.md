@@ -1,6 +1,6 @@
 # Debezium source connector from SQL Server to Apache Kafka
 
-Docker file for the connector that installing kafka-connect-jdbc library [Dockerfile](https://github.com/kayvansol/kafka-source/blob/main/Dockerfile):
+Docker file for the connector that installing debezium-connector-sqlserver library [Dockerfile](https://github.com/kayvansol/kafka-source/blob/main/Dockerfile):
 ```bash
 FROM docker.arvancloud.ir/confluentinc/cp-kafka-connect:latest
 
