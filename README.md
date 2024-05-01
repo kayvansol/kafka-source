@@ -157,7 +157,11 @@ CREATE TABLE prospects (
 
 EXEC sys.sp_cdc_enable_table @source_schema = 'dbo', @source_name = 'prospects', @role_name = NULL, @supports_net_changes = 0;
 GO
+
 ```
+
+Restart SQL Server instance and agent 
+
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/enable-cdc.png?raw=true)
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/cdc-tables.png?raw=true)
@@ -194,6 +198,8 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 and after inserting new data to related sql server table, the connector sync kafka topic with the new data :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/Insertnew.png?raw=true)
+
+go to [http://localhost:8080/ui/docker-kafka-server/topic/usertopic/data?sort=Oldest&partition=All](http://localhost:8080/ui/docker-kafka-server/topic/usertopic/data?sort=Oldest&partition=All)
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/topicValues.png?raw=true)
 
