@@ -1,6 +1,6 @@
 # Debezium source connector from SQL Server to Apache Kafka
 
-Docker file for the connector that installing kafka-connect-jdbc library [Dockerfile](https://github.com/kayvansol/kafka-source/blob/main/docker-compose.yml):
+Docker file for the connector that installing kafka-connect-jdbc library [Dockerfile](https://github.com/kayvansol/kafka-source/blob/main/Dockerfile):
 ```bash
 FROM docker.arvancloud.ir/confluentinc/cp-kafka-connect:latest
 
@@ -134,6 +134,8 @@ docker compose up
 Docker Desktop :
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/Containers.png?raw=true)
+
+
 
 then check all the container's logs for being healthy.
 
