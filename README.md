@@ -169,6 +169,11 @@ Restart SQL Server instance and agent
 ![alt text](https://raw.githubusercontent.com/kayvansol/kafka-source/main/img/cdc-jobs.png?raw=true)
 
 then create a kafka connector to sql server :
+
+```
+docker exec -it connect1 bash
+```
+
 ```powershell
 
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors -d '{ "name": "debezium-connector", 
