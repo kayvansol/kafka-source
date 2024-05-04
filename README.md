@@ -116,6 +116,9 @@ services:
               connect:
                 - name: "connect"
                   url: "http://connect1:8083"
+#             ksqldb:
+#               - name: "ksqldb"
+#                 url: "http://ksqldb-server:8088"
 
     ports:
       - 8080:8080
